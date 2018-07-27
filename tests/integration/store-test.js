@@ -1,4 +1,4 @@
-import RSVP, { Promise as EmberPromise, resolve } from 'rsvp';
+import RSVP, { Promise, resolve } from 'rsvp';
 import { run, next } from '@ember/runloop';
 import setupStore from 'dummy/tests/helpers/store';
 
@@ -76,7 +76,7 @@ test("destroying record during find doesn't cause error", function(assert) {
 
   let TestAdapter = DS.Adapter.extend({
     findRecord(store, type, id, snapshot) {
-      return new EmberPromise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         next(() => {
           store.unloadAll(type.modelName);
           reject();
@@ -93,31 +93,51 @@ test("destroying record during find doesn't cause error", function(assert) {
   return run(() => store.findRecord(type, id).then(done, done));
 });
 
-test('find calls do not resolve when the store is destroyed', function(assert) {
-  assert.expect(0);
+test('find calls do not resolve when the store is destroyed', async function(assert) {
+  assert.expect(2);
   let done = assert.async();
-
+  let next;
+  let nextPromise = new Promise(resolve => {
+    next = resolve;
+  });
   let TestAdapter = DS.Adapter.extend({
-    findRecord(store, type, id, snapshot) {
-      store.destroy();
-      resolve(null);
+    findRecord() {
+      next();
+      nextPromise = new Promise(resolve => {
+        next = resolve;
+      }).then(() => {
+        return {
+          data: { type: 'car', id: '1' },
+        };
+      });
+      return nextPromise;
     },
   });
 
   initializeStore(TestAdapter);
-
-  let type = 'car';
-  let id = 1;
 
   store.push = function() {
     assert('The test should have destroyed the store by now', store.get('isDestroyed'));
 
     throw new Error("We shouldn't be pushing data into the store when it is destroyed");
   };
+  store.findRecord('car', '1');
 
-  run(() => store.findRecord(type, id));
+  await nextPromise;
 
-  setTimeout(() => done(), 500);
+  assert.throws(() => {
+    run(() => store.destroy());
+  }, /Async Request leaks detected/);
+
+  next();
+  await nextPromise;
+
+  // ensure we allow the internal store promises
+  // to flush, potentially pushing data into the store
+  setTimeout(() => {
+    assert.ok(true, 'We made it to the end');
+    done();
+  }, 0);
 });
 
 test('destroying the store correctly cleans everything up', function(assert) {
