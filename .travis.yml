@@ -30,6 +30,9 @@ stages:
 
 jobs:
   fail_fast: true
+  allow_failures:
+   - script: yarn test-external:ember-observer
+   - script: yarn test-external:travis-web
 
   include:
     # runs tests with current locked deps and linting
