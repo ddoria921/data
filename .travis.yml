@@ -32,7 +32,6 @@ jobs:
   fail_fast: true
   allow_failures:
    - script: yarn test-external:ember-observer
-   - script: yarn test-external:travis-web
 
   include:
     # runs tests with current locked deps and linting
@@ -81,6 +80,12 @@ jobs:
       script: yarn test-external:ember-observer
     - env: NAME=travis-web
       script: yarn test-external:travis-web
+    - env: NAME=emberaddons.com
+      script: yarn test-external:emberaddons.com
+    - env: NAME=ember-data-change-tracker
+      script: yarn test-external:ember-data-change-tracker
+    - env: NAME=ember-m3
+      script: yarn test-external:ember-m3
 
     - stage: deploy
       env: NAME=publish                # used only to make Travis UI show description
