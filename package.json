@@ -16,7 +16,10 @@
     "test:all": "ember try:each",
     "test:node": "node node-tests/nodetest-runner.js",
     "test:production": "ember test -e production && ember test -e production --record-data-rfc-build",
-    "test:optional-features": "ember test -e test-optional-features && ember test -e test-optional-features --record-data-rfc-build"
+    "test:optional-features": "ember test -e test-optional-features && ember test -e test-optional-features --record-data-rfc-build",
+    "test-external:model-fragments": "node ./lib/scripts/test-external ember-data-model-fragments https://github.com/lytics/ember-data-model-fragments.git",
+    "test-external:ember-observer": "node ./lib/scripts/test-external ember-observer https://github.com/emberobserver/client.git",
+    "test-external:travis-web": "node ./lib/scripts/test-external travis-web https://github.com/travis-ci/travis-web.git"
   },
   "author": "",
   "license": "MIT",

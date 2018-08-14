@@ -70,6 +70,12 @@ jobs:
     - env: EMBER_TRY_SCENARIO=ember-beta
     - env: EMBER_TRY_SCENARIO=ember-canary
 
+    # runs tests against various open-source projects for early-warning regression analysis
+    - stage: external partner tests
+      script: yarn test-external:model-fragments
+      - script: yarn test-external:ember-observer
+      - script: yarn test-external:travis-web
+
     - stage: deploy
       env: NAME=publish                # used only to make Travis UI show description
       install: yarn install
