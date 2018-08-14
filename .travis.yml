@@ -73,8 +73,8 @@ jobs:
     # runs tests against various open-source projects for early-warning regression analysis
     - stage: external partner tests
       script: yarn test-external:model-fragments
-      - script: yarn test-external:ember-observer
-      - script: yarn test-external:travis-web
+    - script: yarn test-external:ember-observer
+    - script: yarn test-external:travis-web
 
     - stage: deploy
       env: NAME=publish                # used only to make Travis UI show description
