@@ -65,12 +65,17 @@ jobs:
       script: yarn test:node
 
     # runs tests against each supported Ember version
-    - stage: older version tests
+    - stage: ember version tests
+      name: "Ember LTS 2.16"
       env: EMBER_TRY_SCENARIO=ember-lts-2.16
-    - env: EMBER_TRY_SCENARIO=ember-lts-2.18
-    - env: EMBER_TRY_SCENARIO=ember-release
-    - env: EMBER_TRY_SCENARIO=ember-beta
-    - env: EMBER_TRY_SCENARIO=ember-canary
+    - name: "Ember LTS 2.18"
+      env: EMBER_TRY_SCENARIO=ember-lts-2.18
+    - name: "Ember Release"
+      env: EMBER_TRY_SCENARIO=ember-release
+    - name: "Ember Beta"
+      env: EMBER_TRY_SCENARIO=ember-beta
+    - name: "Ember Canary"
+      env: EMBER_TRY_SCENARIO=ember-canary
 
     # runs tests against various open-source projects for early-warning regression analysis
     - stage: external partner tests
