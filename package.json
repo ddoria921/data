@@ -22,7 +22,8 @@
     "test-external:emberaddons.com": "node ./lib/scripts/test-external ember-cli-addon-search https://github.com/gcollazo/ember-cli-addon-search.git",
     "test-external:model-fragments": "node ./lib/scripts/test-external ember-data-model-fragments https://github.com/lytics/ember-data-model-fragments.git",
     "test-external:ember-observer": "node ./lib/scripts/test-external ember-observer https://github.com/emberobserver/client.git",
-    "test-external:travis-web": "node ./lib/scripts/test-external travis-web https://github.com/travis-ci/travis-web.git"
+    "test-external:travis-web": "node ./lib/scripts/test-external travis-web https://github.com/travis-ci/travis-web.git",
+    "test-external:storefront": "node ./lib/scripts/test-external storefront https://github.com/embermap/ember-data-storefront.git"
   },
   "author": "",
   "license": "MIT",

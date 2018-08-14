@@ -30,8 +30,6 @@ stages:
 
 jobs:
   fail_fast: true
-  allow_failures:
-   - script: yarn test-external:ember-observer
 
   include:
     # runs tests with current locked deps and linting
@@ -91,6 +89,8 @@ jobs:
       script: yarn test-external:ember-data-change-tracker
     - name: "ember-m3"
       script: yarn test-external:ember-m3
+    - name: "Ember Data Storefront"
+      script: test-external:storefront
 
     - stage: deploy
       name: "Publish"
