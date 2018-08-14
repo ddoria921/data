@@ -36,18 +36,18 @@ jobs:
   include:
     # runs tests with current locked deps and linting
     - stage: test
-      env: NAME=test                  # used only to make Travis UI show description
+      name: "Basic Tests"
       script:
         - ./bin/lint-features
         - yarn lint:js
         - yarn test
 
     - stage: additional tests
-      env: NAME=optional-features     # used only to make Travis UI show description
+      name: "Optional Features"
       install: yarn install
       script: yarn test:optional-features
 
-    - env: NAME=floating dependencies # used only to make Travis UI show description
+    - name: "Floating Dependencies"
       install: yarn install --no-lockfile --non-interactive
       script: yarn test
 
@@ -56,11 +56,11 @@ jobs:
       env: TARGET_IE11=true
       script: yarn test
 
-    - env: NAME=production            # used only to make Travis UI show description
+    - name: "Production"
       install: yarn install
       script: yarn test:production
 
-    - env: NAME=node-tests            # used only to make Travis UI show description
+    - name: "Node Tests"
       install: yarn install
       script: yarn test:node
 
@@ -74,21 +74,21 @@ jobs:
 
     # runs tests against various open-source projects for early-warning regression analysis
     - stage: external partner tests
-      env: NAME=model-fragments
+      name: "Model Fragments"
       script: yarn test-external:model-fragments
-    - env: NAME=ember-observer
+    - name: "Ember Observer"
       script: yarn test-external:ember-observer
-    - env: NAME=travis-web
+    - name: "Travis Web"
       script: yarn test-external:travis-web
-    - env: NAME=emberaddons.com
+    - name: "emberaddons.com"
       script: yarn test-external:emberaddons.com
-    - env: NAME=ember-data-change-tracker
+    - name: "ember-data-change-tracker"
       script: yarn test-external:ember-data-change-tracker
-    - env: NAME=ember-m3
+    - name: "ember-m3"
       script: yarn test-external:ember-m3
 
     - stage: deploy
-      env: NAME=publish                # used only to make Travis UI show description
+      name: "Publish"
       install: yarn install
       script:
         - node_modules/.bin/ember try:reset
